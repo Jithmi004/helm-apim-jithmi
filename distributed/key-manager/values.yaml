@@ -36,7 +36,7 @@ aws:
   serviceAccountName: ""
 azure:
   # -- If Azure is used as the cloud provider
-  enabled: false
+  enabled: true
   acr:
     # -- Azure container registry name
     registry: ""
@@ -113,7 +113,7 @@ kubernetes:
       burstLimit: ""
     km:
       # -- Enable ingress for Key Manager
-      enabled: false
+      enabled: true
       # -- Ingress hostname for Key Manager pass-through
       hostname: "km.wso2.com"
       # -- Ingress annotations for Key Manager pass-through
@@ -150,13 +150,13 @@ kubernetes:
   # See docs/assets/sample-gateway.yaml for an example Gateway manifest
   gatewayAPI:
     # -- Enable Gateway API resources (HTTPRoutes and policies)
-    enabled: true
+    enabled: false
     # -- Name of the externally-created Gateway resource that HTTPRoutes will reference (e.g., istio, nginx, contour, envoy-gateway, gke-l7-global-external-managed)
     # This Gateway must exist in the same namespace before installing the chart
     gatewayName: ""
     km:
       # -- Enable HTTPRoute for Key Manager
-      enabled: true
+      enabled: false
       # -- Hostname for Key Manager
       hostname: "km.wso2.com"
       # -- HTTPRoute annotations
@@ -225,7 +225,7 @@ wso2:
     configurations:
       encryption:
         # -- Symmetric encryption key shared by all nodes. This must be set explicitly and must be the same across all nodes before first startup.
-        key: ""
+        key: "dc4ac27f91d0bfda3ada2486aaa1bd404f1aa4158390533bf9d2867814f6984b"
         # -- Symmetric cipher transformation. AES/GCM/NoPadding is used as the symmetric cipher transformation.
         cipherTransformation: "AES/GCM/NoPadding"
         # -- Internal crypto provider implementation used for symmetric encryption.
@@ -250,10 +250,10 @@ wso2:
       adminPassword: ""
       databases:
         # -- Database type. eg: mysql, oracle, mssql, postgres
-        type: ""
+        type: "mssql"
         jdbc:
           # -- JDBC driver class name
-          driver: ""
+          driver: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
         # -- APIM AM_DB configurations.
         apim_db:
           # -- APIM AM_DB URL
@@ -322,9 +322,9 @@ wso2:
             # -- TLS keystore alias
             alias: "wso2carbon"
             # -- TLS keystore password
-            password: ""
+            password: "wso2carbon"
             # -- TLS keystore key password
-            keyPassword: ""
+            keyPassword: "wso2carbon"
           internal:
             # -- Internal keystore enabled
             enabled: false
@@ -340,15 +340,15 @@ wso2:
           # -- Truststore name
           name: "client-truststore.jks"
           # -- Truststore password
-          password: ""
+          password: "wso2carbon"
 
       eventhub:
         # -- Event hub (control plane) loadbalancer service url
-        serviceUrl: "wso2am-cp-service"
+        serviceUrl: "apim-acp-wso2am-acp-service"
         # -- Event hub service urls
         urls:
-          - "wso2am-cp-1-service"
-          - "wso2am-cp-2-service"
+          - "apim-acp-wso2am-acp-1-service"
+          - "apim-acp-wso2am-acp-2-service"
 
       # APIM OAuth configurations
       oauth_config:
@@ -389,11 +389,11 @@ wso2:
       # -- Container registry credentials.
       # Specify image pull secrets for private registries
       imagePullSecrets:
-        enabled: false
+        enabled: true
         username: ""
         password: ""
       # -- Container registry hostname
-      registry: ""
+      registry: "docker.io"
       # -- Azure ACR repository name consisting the image
       repository: ""
       # -- Docker image digest

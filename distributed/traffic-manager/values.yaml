@@ -36,7 +36,7 @@ aws:
   serviceAccountName: ""
 azure:
   # -- If Azure is used as the cloud provider
-  enabled: false
+  enabled: true
   acr:
     # -- Azure container registry name
     registry: ""
@@ -151,7 +151,7 @@ wso2:
     configurations:
       encryption:
         # -- Symmetric encryption key shared by all nodes. This must be set explicitly and must be the same across all nodes before first startup.
-        key: ""
+        key: "dc4ac27f91d0bfda3ada2486aaa1bd404f1aa4158390533bf9d2867814f6984b"
         # -- Symmetric cipher transformation. AES/GCM/NoPadding is used as the symmetric cipher transformation.
         cipherTransformation: "AES/GCM/NoPadding"
         # -- Internal crypto provider implementation used for symmetric encryption.
@@ -176,10 +176,10 @@ wso2:
       adminPassword: ""
       databases:
         # -- Database type. eg: mysql, oracle, mssql, postgres
-        type: ""
+        type: "mssql"
         jdbc:
           # -- JDBC driver class name
-          driver: ""
+          driver: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
         # -- APIM AM_DB configurations.
         apim_db:
           # -- APIM AM_DB URL
@@ -248,9 +248,9 @@ wso2:
             # -- TLS keystore alias
             alias: "wso2carbon"
             # -- TLS keystore password
-            password: ""
+            password: "wso2carbon"
             # -- TLS keystore key password
-            keyPassword: ""
+            keyPassword: "wso2carbon"
           internal:
             # -- Internal keystore enabled
             enabled: false
@@ -266,11 +266,11 @@ wso2:
           # -- Truststore name
           name: "client-truststore.jks"
           # -- Truststore password
-          password: ""
+          password: "wso2carbon"
 
       km:
         # -- Key manager service name if default Resident KM is used
-        serviceUrl: "wso2am-cp-service"
+        serviceUrl: "apim-km-wso2am-km-service"
         # -- Key Manager service port
         servicePort: 9443        
 
@@ -282,11 +282,11 @@ wso2:
 
       eventhub:
         # -- Event hub (control plane) loadbalancer service url
-        serviceUrl: "wso2am-cp-service"
+        serviceUrl: "apim-acp-wso2am-acp-service"
         # -- Event hub service urls
         urls:
-          - "wso2am-cp-1-service"
-          - "wso2am-cp-2-service"
+          - "apim-acp-wso2am-acp-1-service"
+          - "apim-acp-wso2am-acp-2-service"
 
       # APIM OAuth configurations
       oauth_config:
@@ -320,14 +320,13 @@ wso2:
 
       # -- APIM distributed throttling configurations
       distributedThrottling:
-        enable: false
+        enable: true
         type: "redis"
-        syncInterval: 1
+        syncInterval: 10
         corePoolSize: 5
         keyvalueStore:
           host: ""
-          port: 6379
-          user: ""
+          port: 
           password: ""
           maxTotal: 20
           maxIdle: 20
@@ -346,15 +345,15 @@ wso2:
       # -- Container registry credentials.
       # Specify image pull secrets for private registries
       imagePullSecrets:
-        enabled: false
-        username: ""
-        password: ""
+        enabled: true
+        username: "jimiyaaa"
+        password: "ypC6CZVa%889Pp^"
       # -- Container registry hostname
-      registry: ""
+      registry: "docker.io"
       # -- Azure ACR repository name consisting the image
-      repository: ""
+      repository: "jimiyaaa/wso2-private"
       # -- Docker image digest
-      digest: ""
+      digest: "sha256:677569870204dfad73c9a007908f0d7d809c83c7ec5408ff9d379889887cf318"
       # -- Refer to the Kubernetes documentation on updating images (https://kubernetes.io/docs/concepts/containers/images/#updating-images)
       imagePullPolicy: Always
 
@@ -440,4 +439,4 @@ wso2:
 
     # -- Enable high availability for traffic manager. If this is enabled, two traffic manager instances will be deployed.
     # This is not relavant to HA in Kubernetes. Multiple replicas of the same instance will not count as HA for TM.
-    highAvailability: true
+    highAvailability: false

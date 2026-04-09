@@ -12,7 +12,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "apim-helm-tm.fullname" . }}-deployment-2
+  name: {{ template "apim-helm-tm.fullname" . }}-deployment-3
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
@@ -24,14 +24,14 @@ spec:
   selector:
     matchLabels:
       deployment: {{ template "apim-helm-tm.fullname" . }}
-      node: {{ template "apim-helm-tm.fullname" . }}-2
+      node: {{ template "apim-helm-tm.fullname" . }}-3
   template:
     metadata:
       annotations:
         {{- if .Values.kubernetes.enableAppArmor }}
         container.apparmor.security.beta.kubernetes.io/wso2am-traffic-manager: runtime/default
         {{- end }}
-        checksum.am.tm.conf: {{ include (print $.Template.BasePath "/traffic-manager/instance-2/wso2am-tm-conf.yaml") . | sha256sum }}
+        checksum.am.tm.conf: {{ include (print $.Template.BasePath "/traffic-manager/instance-3/wso2am-tm-conf.yaml") . | sha256sum }}
         checksum.am.tm.conf.log4j2: {{ include (print $.Template.BasePath "/traffic-manager/wso2am-tm-conf-log4j2.yaml") . | sha256sum }}
         checksum.am.cp.conf.secret: {{ include (print $.Template.BasePath "/traffic-manager/wso2am-tm-conf-secret-conf.yaml") . | sha256sum }}
         {{- if .Values.wso2.deployment.pod.annotations }}
@@ -39,7 +39,7 @@ spec:
         {{- end }}
       labels:
         deployment: {{ template "apim-helm-tm.fullname" . }}
-        node: {{ template "apim-helm-tm.fullname" . }}-2
+        node: {{ template "apim-helm-tm.fullname" . }}-3
         product: apim
     spec:
       affinity:
@@ -107,13 +107,6 @@ spec:
             secretKeyRef:
               name: {{ .Values.wso2.apim.configurations.existingSecret.secretName }}
               key:  {{ .Values.wso2.apim.configurations.existingSecret.sharedDBPasswordKey }}
-        {{- end }}
-        {{- if and .Values.wso2.apim.configurations.existingSecret.secretName .Values.wso2.apim.configurations.existingSecret.encryptionKeyKey (eq .Values.wso2.apim.configurations.encryption.internalCryptoProvider "org.wso2.carbon.crypto.provider.SymmetricKeyInternalCryptoProvider") }}
-        - name: WSO2_ENCRYPTION_KEY
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.wso2.apim.configurations.existingSecret.secretName }}
-              key:  {{ .Values.wso2.apim.configurations.existingSecret.encryptionKeyKey }}
         {{- end }}
         {{- if and .Values.wso2.apim.configurations.security.jksExistingSecret.secretName .Values.wso2.apim.configurations.security.jksExistingSecret.primaryKeystorePasswordKey .Values.wso2.apim.configurations.security.jksExistingSecret.primaryKeystoreKeyPasswordKey }}
         - name: WSO2_PRIMARY_KEYSTORE_PASSWORD
@@ -275,7 +268,7 @@ spec:
       volumes:
       - name: wso2am-traffic-manager-conf
         configMap:
-          name: {{ template "apim-helm-tm.fullname" . }}-conf-2
+          name: {{ template "apim-helm-tm.fullname" . }}-conf-3
           defaultMode: 0407
       - name: wso2am-traffic-manager-entrypoint
         configMap:

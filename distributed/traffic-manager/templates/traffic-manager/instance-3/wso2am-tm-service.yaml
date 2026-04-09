@@ -12,13 +12,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "apim-helm-tm.fullname" . }}-2-service
+  name: {{ template "apim-helm-tm.fullname" . }}-3-service
   namespace : {{ .Release.Namespace }}
 spec:
   # label keys and values that must match in order to receive traffic for this service
   selector:
     deployment: {{ template "apim-helm-tm.fullname" . }}
-    node: {{ template "apim-helm-tm.fullname" . }}-2
+    node: {{ template "apim-helm-tm.fullname" . }}-3
   ports:
     # ports that this service should serve on
     - name: binary
